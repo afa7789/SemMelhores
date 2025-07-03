@@ -12,7 +12,7 @@ let lastEnterTime = 0;
 let currentLanguage = 'pt'; // 'pt' ou 'en'
 
 // === TEMA ===
-let currentTheme = 'light'; // 'light' ou 'dark'
+let currentTheme = 'dark'; // 'light' ou 'dark'
 
 // === TEXTOS ===
 const texts = {
