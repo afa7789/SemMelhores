@@ -539,7 +539,7 @@ function updateLanguage() {
 // === TEMA ===
 
 function toggleTheme() {
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
     updateTheme();
 }
 
@@ -547,12 +547,12 @@ function updateTheme() {
     const body = document.body;
     const themeToggle = document.getElementById('themeToggle');
     
-    if (currentTheme === 'dark') {
-        body.classList.add('dark-theme');
-        themeToggle.textContent = '☀️';
-    } else {
-        body.classList.remove('dark-theme');
+    if (currentTheme === 'light') {
+        body.classList.add('light-theme');
         themeToggle.textContent = '🌙';
+    } else {
+        body.classList.remove('light-theme');
+        themeToggle.textContent = '☀️';
     }
 }
 

@@ -1,187 +1,213 @@
+/* BRUTALIST STYLES - Based on Satsukashii and DCA BTC Brutalist sites */
+
 body {
-    margin: 10px;
-    background-color: #ffffff;
-    color: #333333;
+    margin: 20px;
+    font-family: 'Courier New', monospace;
+    background-color: #000;
+    color: #fff;
+    line-height: 1.4;
+    word-wrap: break-word;
 }
 
-/* Dark Theme */
-body.dark-theme {
-    background-color: #1a1a1a;
-    color: #e0e0e0;
+body.light-theme {
+    background-color: #fff;
+    color: #000;
 }
 
-body.dark-theme .main-title a {
-    color: #e0e0e0;
+body.light-theme .main-title a {
+    color: #000;
 }
 
-body.dark-theme .main-title a:hover {
-    color: #66b3ff;
+body.light-theme .main-title a:hover {
+    color: #000;
 }
 
-body.dark-theme .subtitle {
-    color: #b0b0b0;
+body.light-theme .subtitle {
+    color: #000;
 }
 
-body.dark-theme .main-header {
-    border-bottom-color: #444;
+body.light-theme .main-header {
+    border-bottom-color: #000;
 }
 
-body.dark-theme .language-toggle,
-body.dark-theme .theme-toggle {
-    border-color: #444;
-    background-color: #2a2a2a;
+body.light-theme .title-icon {
+    color: #f7931a;
 }
 
-body.dark-theme .language-toggle:hover,
-body.dark-theme .theme-toggle:hover {
-    border-color: #66b3ff;
-    background-color: #003366;
+body.light-theme .language-toggle,
+body.light-theme .theme-toggle {
+    border-color: #000;
+    background-color: #fff;
+    color: #000;
 }
 
-body.dark-theme #searchInput {
-    background-color: #2a2a2a;
-    border-color: #444;
-    color: #e0e0e0;
+body.light-theme .language-toggle:hover,
+body.light-theme .theme-toggle:hover {
+    background-color: #000;
+    color: #fff;
 }
 
-body.dark-theme #searchInput:focus {
-    border-color: #66b3ff;
+body.light-theme #searchInput {
+    background-color: #fff;
+    border-color: #000;
+    color: #000;
 }
 
-body.dark-theme table {
-    background-color: #2a2a2a;
+body.light-theme table {
+    background-color: #fff;
+    border-color: #000;
 }
 
-body.dark-theme th,
-body.dark-theme td {
-    border-color: #444;
-    color: #e0e0e0;
+body.light-theme th,
+body.light-theme td {
+    border-color: #000;
+    color: #000;
 }
 
-body.dark-theme th {
-    background-color: #333;
+body.light-theme th {
+    background-color: #fff;
 }
 
-body.dark-theme a {
-    color: #66b3ff;
+body.light-theme .coin-container a {
+    color: #d4751a;
 }
 
-body.dark-theme a:hover {
-    color: #99ccff;
+body.light-theme .coin-container a:hover {
+    color: #000;
 }
 
-body.dark-theme .admin-header {
-    background-color: #2d4a3e;
-    border-color: #4a6b5a;
-    color: #a8d4b8;
+body.light-theme a {
+    color: #000;
 }
 
-body.dark-theme .blacklisted-row {
-    background-color: #3d2626;
+body.light-theme a:hover {
+    color: #000;
 }
 
-body.dark-theme .main-footer {
-    border-top-color: #444;
+body.light-theme .admin-header {
+    background-color: #ffff00;
+    border-color: #000;
+    color: #000;
 }
 
-body.dark-theme .main-footer p {
-    color: #888;
+body.light-theme .blacklisted-row {
+    background-color: #ff9999;
 }
 
-/* Header */
+body.light-theme .main-footer {
+    border-top-color: #000;
+}
+
+body.light-theme .main-footer p {
+    color: #000;
+}
+
+/* HEADER */
 .main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #ddd;
-}
-
-.header-left {
-    flex: 1;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #fff;
 }
 
 .main-title {
     margin: 0;
-    font-size: 2.5em;
+    font-size: 3em;
     font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
 }
 
 .main-title a {
     text-decoration: none;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    color: #fff;
 }
 
 .main-title a:hover {
-    color: #0066cc;
+    color: #fff;
+    text-decoration: underline;
 }
 
 .title-icon {
-    font-size: 1.2em;
-    color: #0066cc;
+    color: #f7931a;
 }
 
 .subtitle {
-    margin: 5px 0 0 0;
-    font-size: 1.1em;
-    color: #666;
-    font-style: italic;
+    margin: 10px 0 0 0;
+    font-size: 1em;
+    color: #fff;
+    text-transform: lowercase;
+    font-family: 'Courier New', monospace;
 }
 
 .header-right {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .language-toggle,
 .theme-toggle {
     background: none;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 1.5em;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 1.2em;
     cursor: pointer;
-    transition: all 0.2s;
+    margin-left: 10px;
+    font-family: 'Courier New', monospace;
 }
 
 .language-toggle:hover,
 .theme-toggle:hover {
-    border-color: #0066cc;
-    background-color: #f0f8ff;
+    background-color: #fff;
+    color: #000;
 }
 
-/* Search */
+/* SEARCH */
 .search-container {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 #searchInput {
     width: 100%;
     padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid #fff;
+    background-color: #000;
+    color: #fff;
     font-size: 16px;
+    font-family: 'Courier New', monospace;
     box-sizing: border-box;
 }
 
 #searchInput:focus {
     outline: none;
-    border-color: #0066cc;
+    background-color: #000;
+    color: #fff;
 }
 
+#searchInput::placeholder {
+    color: #666;
+}
+
+/* TABLE */
 table {
     width: 100%;
     border-collapse: collapse;
+    border: 1px solid #fff;
 }
 
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    border: 1px solid #fff;
+    padding: 10px;
+    text-align: left;
+    font-family: 'Courier New', monospace;
+}
+
+th {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .text-center {
@@ -203,34 +229,57 @@ th, td {
 }
 
 .coin-image {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
+    width: 16px;
+    height: 16px;
 }
 
+.coin-container a {
+    color: #f7931a;
+    text-decoration: underline;
+}
+
+.coin-container a:hover {
+    color: #fff;
+}
+
+a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #fff;
+}
+
+/* ADMIN */
 .admin-header {
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-    color: #155724;
-    padding: 10px;
-    margin-bottom: 10px;
+    background-color: #ffff00;
+    border: 1px solid #fff;
+    color: #000;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
 }
 
 .blacklisted-row {
-    background-color: #ffe6e6;
+    background-color: #330000;
 }
 
-/* Footer */
+/* FOOTER */
 .main-footer {
-    margin-top: 40px;
+    margin-top: 50px;
     padding: 20px 0;
     text-align: center;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #fff;
 }
 
 .main-footer p {
     margin: 0;
-    font-size: 0.9em;
-    color: #666;
-    font-style: italic;
+    font-size: 1em;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
 }
