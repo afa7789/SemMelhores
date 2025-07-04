@@ -1,3 +1,6 @@
+// === CONFIGURAÇÕES ===
+const ENABLE_MODAL = false; // true = abre modal, false = vai direto para CoinGecko
+
 // === ESTADO GLOBAL ===
 let cryptoData = new Map();
 let blacklistSet = new Set();
@@ -320,11 +323,17 @@ function createCoinRow(coin, position) {
     
     // Link
     const link = document.createElement('a');
-    link.href = '#';
-    link.onclick = (e) => {
-        e.preventDefault();
-        showCoinModal(coin.id);
-    };
+    
+    if (ENABLE_MODAL) {
+        link.href = '#';
+        link.onclick = (e) => {
+            e.preventDefault();
+            showCoinModal(coin.id);
+        };
+    } else {
+        link.href = `https://www.coingecko.com/en/coins/${coin.id}`;
+        link.target = '_blank';
+    }
     
     let nameContent = `${coin.symbol.toUpperCase()} ${coin.name}`;
     if (isAdminMode && isBlacklisted) {
