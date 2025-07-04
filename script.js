@@ -29,7 +29,17 @@ const texts = {
         topCoins: 'Top',
         coins: 'moedas',
         noCoinsSelected: 'Nenhuma moeda selecionada!',
-        flag: '🇺🇸'
+        flag: '🇺🇸',
+        loading: 'Carregando...',
+        errorLoading: 'Erro ao carregar dados da moeda.',
+        rank: 'Rank:',
+        priceLabel: 'Preço:',
+        marketCapLabel: 'Market Cap:',
+        volume24h: 'Volume 24h:',
+        change24h: 'Variação 24h:',
+        circulatingSupply: 'Supply Circulante:',
+        totalSupply: 'Supply Total:',
+        viewOnCoingecko: 'Ver no CoinGecko'
     },
     en: {
         searchPlaceholder: 'Search cryptocurrencies...',
@@ -44,7 +54,17 @@ const texts = {
         topCoins: 'Top',
         coins: 'coins',
         noCoinsSelected: 'No coins selected!',
-        flag: '🇧🇷'
+        flag: '🇧🇷',
+        loading: 'Loading...',
+        errorLoading: 'Error loading coin data.',
+        rank: 'Rank:',
+        priceLabel: 'Price:',
+        marketCapLabel: 'Market Cap:',
+        volume24h: 'Volume 24h:',
+        change24h: '24h Change:',
+        circulatingSupply: 'Circulating Supply:',
+        totalSupply: 'Total Supply:',
+        viewOnCoingecko: 'View on CoinGecko'
     }
 };
 
@@ -70,6 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     startPeriodicUpdate();
     setupEventListeners();
+    setupModalEvents();
     updateLanguage();
     updateTheme();
 });
@@ -299,8 +320,11 @@ function createCoinRow(coin, position) {
     
     // Link
     const link = document.createElement('a');
-    link.href = `https://www.coingecko.com/en/coins/${coin.id}`;
-    link.target = '_blank';
+    link.href = '#';
+    link.onclick = (e) => {
+        e.preventDefault();
+        showCoinModal(coin.id);
+    };
     
     let nameContent = `${coin.symbol.toUpperCase()} ${coin.name}`;
     if (isAdminMode && isBlacklisted) {
@@ -314,7 +338,7 @@ function createCoinRow(coin, position) {
     // Preço
     const priceCell = document.createElement('td');
     priceCell.className = 'text-right';
-    priceCell.textContent = `$${coin.current_price.toFixed(2)}`;
+    priceCell.textContent = formatPrice(coin.current_price);
     
     // Market Cap
     const marketCapCell = document.createElement('td');
@@ -413,6 +437,21 @@ function formatMarketCap(marketCap) {
     if (marketCap >= 1e6) return `$${(marketCap / 1e6).toFixed(2)}M`;
     if (marketCap >= 1e3) return `$${(marketCap / 1e3).toFixed(2)}K`;
     return `$${marketCap.toFixed(2)}`;
+}
+
+function formatPrice(price) {
+    if (typeof price !== 'number' || isNaN(price)) return 'N/A';
+    
+    // Para preços >= $1, mostra 2 casas decimais
+    if (price >= 1) {
+        return `$${price.toFixed(2)}`;
+    }
+    // Para preços < $1, mostra apenas 2 dígitos significativos
+    else {
+        // Usar toPrecision(2) para garantir exatamente 2 dígitos significativos
+        const formatted = parseFloat(price.toPrecision(2));
+        return `$${formatted}`;
+    }
 }
 
 // === EVENT LISTENERS ===
@@ -562,3 +601,87 @@ window.addEventListener('beforeunload', () => {
         clearInterval(updateInterval);
     }
 });
+
+// === MODAL FUNCTIONS ===
+
+async function showCoinModal(coinId) {
+    const modal = document.getElementById('coinModal');
+    const modalBody = document.getElementById('modalBody');
+    
+    // Mostra modal com loading
+    modal.style.display = 'block';
+    modalBody.innerHTML = `<p>${texts[currentLanguage].loading}</p>`;
+    
+    try {
+        // Busca dados detalhados da API
+        const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        displayCoinData(data);
+        
+    } catch (error) {
+        console.error('Erro ao buscar dados da moeda:', error);
+        modalBody.innerHTML = `<p>${texts[currentLanguage].errorLoading}</p>`;
+    }
+}
+
+function displayCoinData(coin) {
+    const modalBody = document.getElementById('modalBody');
+    
+    const currentPrice = coin.market_data?.current_price?.usd || 'N/A';
+    const marketCap = coin.market_data?.market_cap?.usd || 'N/A';
+    const marketCapRank = coin.market_cap_rank || 'N/A';
+    const priceChange24h = coin.market_data?.price_change_percentage_24h || 'N/A';
+    const volume24h = coin.market_data?.total_volume?.usd || 'N/A';
+    const circulatingSupply = coin.market_data?.circulating_supply || 'N/A';
+    const totalSupply = coin.market_data?.total_supply || 'N/A';
+    
+    modalBody.innerHTML = `
+        <div class="coin-detail-header">
+            <img src="${coin.image?.large || ''}" alt="${coin.name}" class="coin-detail-image">
+            <div class="coin-detail-name">${coin.symbol?.toUpperCase()} ${coin.name}</div>
+        </div>
+        
+        <div class="coin-detail-data">
+            <p><strong>${texts[currentLanguage].rank}</strong> #${marketCapRank}</p>
+            <p><strong>${texts[currentLanguage].priceLabel}</strong> ${typeof currentPrice === 'number' ? formatPrice(currentPrice) : currentPrice}</p>
+            <p><strong>${texts[currentLanguage].marketCapLabel}</strong> ${typeof marketCap === 'number' ? formatMarketCap(marketCap) : marketCap}</p>
+            <p><strong>${texts[currentLanguage].volume24h}</strong> ${typeof volume24h === 'number' ? formatMarketCap(volume24h) : volume24h}</p>
+            <p><strong>${texts[currentLanguage].change24h}</strong> ${typeof priceChange24h === 'number' ? priceChange24h.toFixed(2) + '%' : priceChange24h}</p>
+            <p><strong>${texts[currentLanguage].circulatingSupply}</strong> ${typeof circulatingSupply === 'number' ? circulatingSupply.toLocaleString() : circulatingSupply}</p>
+            <p><strong>${texts[currentLanguage].totalSupply}</strong> ${typeof totalSupply === 'number' ? totalSupply.toLocaleString() : totalSupply}</p>
+        </div>
+        
+        <a href="https://www.coingecko.com/en/coins/${coin.id}" target="_blank" class="coingecko-link">
+            ${texts[currentLanguage].viewOnCoingecko}
+        </a>
+    `;
+}
+
+function setupModalEvents() {
+    const modal = document.getElementById('coinModal');
+    const closeBtn = document.querySelector('.close');
+    
+    // Fechar com X
+    closeBtn.onclick = () => {
+        modal.style.display = 'none';
+    };
+    
+    // Fechar clicando fora do modal
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+    
+    // Fechar com ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+        }
+    });
+}
