@@ -1,5 +1,5 @@
 // === CONFIGURAÇÕES ===
-const ENABLE_MODAL = false; // true = abre modal, false = vai direto para CoinGecko
+const ENABLE_MODAL = true; // true = abre modal, false = vai direto para CoinGecko
 
 // === ESTADO GLOBAL ===
 let cryptoData = new Map();
