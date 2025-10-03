@@ -270,7 +270,9 @@ function renderCryptoList(filterText = '') {
             ${isAdminMode ? `<th class="text-center">${texts[currentLanguage].select}</th>` : ''}
             <th class="text-left">${texts[currentLanguage].coin} (${totalCount})</th>
             <th class="text-right">${texts[currentLanguage].price}</th>
-            <th class="text-right">${texts[currentLanguage].marketCap}</th>
+            <th class="text-right column-marketcap">${texts[currentLanguage].marketCap}</th>
+            <th class="text-right column-volume">${texts[currentLanguage].volume24h}</th>
+            <th class="text-right column-change">${texts[currentLanguage].change24h}</th>
         </tr>
     `;
     table.appendChild(thead);
@@ -351,9 +353,22 @@ function createCoinRow(coin, position) {
     
     // Market Cap
     const marketCapCell = document.createElement('td');
-    marketCapCell.className = 'text-right';
+    marketCapCell.className = 'text-right column-marketcap';
     marketCapCell.textContent = formatMarketCap(coin.market_cap);
-    
+
+    // Volume 24h
+    const volumeCell = document.createElement('td');
+    volumeCell.className = 'text-right column-volume';
+    volumeCell.textContent = formatMarketCap(coin.total_volume || 0);
+
+    // Variação 24h
+    const changeCell = document.createElement('td');
+    changeCell.className = 'text-right column-change';
+    const change24h = coin.price_change_percentage_24h || 0;
+    const changeColor = change24h >= 0 ? '#00ff00' : '#ff0000';
+    changeCell.style.color = changeColor;
+    changeCell.textContent = `${change24h >= 0 ? '+' : ''}${change24h.toFixed(2)}%`;
+
     // Checkbox admin
     let checkboxCell = null;
     if (isAdminMode) {
@@ -362,7 +377,7 @@ function createCoinRow(coin, position) {
         const checkbox = createCheckbox(coin.symbol.toLowerCase(), isBlacklisted);
         checkboxCell.appendChild(checkbox);
     }
-    
+
     // Adicionar células
     row.appendChild(positionCell);
     if (isAdminMode && checkboxCell) {
@@ -371,7 +386,9 @@ function createCoinRow(coin, position) {
     row.appendChild(coinCell);
     row.appendChild(priceCell);
     row.appendChild(marketCapCell);
-    
+    row.appendChild(volumeCell);
+    row.appendChild(changeCell);
+
     return row;
 }
 

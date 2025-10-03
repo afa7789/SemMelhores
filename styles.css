@@ -190,6 +190,11 @@ body.light-theme .main-footer p {
 }
 
 /* TABLE */
+#cryptoList {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -392,4 +397,139 @@ body.light-theme .coingecko-link {
 body.light-theme .coingecko-link:hover {
     background-color: #000;
     color: #fff;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 768px) {
+    body {
+        margin: 10px;
+    }
+
+    .main-title {
+        font-size: 1.8em;
+    }
+
+    .subtitle {
+        font-size: 0.85em;
+    }
+
+    .header-right {
+        position: static;
+        margin-top: 10px;
+        text-align: right;
+    }
+
+    th, td {
+        padding: 8px 6px;
+        font-size: 0.8rem;
+    }
+
+    .coin-image {
+        width: 16px;
+        height: 16px;
+    }
+
+    table {
+        min-width: auto;
+    }
+
+    .coin-container {
+        gap: 6px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        margin: 8px;
+    }
+
+    .main-title {
+        font-size: 1.5em;
+    }
+
+    .subtitle {
+        font-size: 0.75em;
+        line-height: 1.3;
+    }
+
+    th, td {
+        padding: 6px 4px;
+        font-size: 0.7rem;
+    }
+
+    .coin-container {
+        gap: 5px;
+        max-width: 120px;
+    }
+
+    .coin-container a {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+
+    .coin-image {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+    }
+
+    .language-toggle,
+    .theme-toggle {
+        padding: 4px 8px;
+        font-size: 0.9em;
+    }
+
+    #searchInput {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        margin: 5px;
+    }
+
+    .main-title {
+        font-size: 1.3em;
+    }
+
+    .subtitle {
+        font-size: 0.65em;
+        line-height: 1.2;
+    }
+
+    th, td {
+        padding: 5px 3px;
+        font-size: 0.65rem;
+    }
+
+    .coin-container {
+        gap: 4px;
+        max-width: 90px;
+    }
+
+    .coin-image {
+        width: 12px;
+        height: 12px;
+    }
+
+    .language-toggle,
+    .theme-toggle {
+        padding: 3px 6px;
+        font-size: 0.85em;
+    }
+
+    /* Ocultar apenas Market Cap e Volume em telas muito pequenas */
+    .column-marketcap {
+        display: none;
+    }
+
+    .column-volume {
+        display: none;
+    }
+
+    /* Mantém visíveis: #, Moeda (com ícone), Preço e Variação 24h */
 }
